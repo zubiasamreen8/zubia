@@ -89,15 +89,24 @@ class ContentService {
           inQuotes = !inQuotes;
         }
       } else if (char == ',' && !inQuotes) {
-        cells.add(current.toString().trim());
+        cells.add(_cleanCell(current.toString()));
         current = StringBuffer();
       } else {
         current.write(char);
       }
     }
-    cells.add(current.toString().trim());
+    cells.add(_cleanCell(current.toString()));
 
     return cells;
+  }
+
+  static String _cleanCell(String cell) {
+    var cleaned = cell.trim();
+    if (cleaned.startsWith("'")) cleaned = cleaned.substring(1);
+    if (cleaned.startsWith('"') && cleaned.endsWith('"') && cleaned.length > 1) {
+      cleaned = cleaned.substring(1, cleaned.length - 1);
+    }
+    return cleaned.trim();
   }
 
   static List<MetricData> _parseMetrics(List<List<String>> data) {
