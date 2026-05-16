@@ -207,22 +207,12 @@ class ContactSection extends StatelessWidget {
   }
 
   Widget _buildContactButtons(BuildContext context, Responsive r, ProfileData profile) {
-    // Stack vertically on very small screens
     if (r.isMobileSmall) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ContactButton(
-            label: "WhatsApp",
-            onTap: () => UrlHelper.openWhatsApp(profile.phone),
-            isOutline: false,
-            compact: true,
-          ),
-          const SizedBox(height: 10),
-          _ContactButton(
-            label: profile.email,
-            onTap: () => UrlHelper.openEmail(profile.email),
-            isOutline: true,
+          _GetInTouchDropdown(
+            profile: profile,
             compact: true,
           ),
           const SizedBox(height: 10),
@@ -240,16 +230,8 @@ class ContactSection extends StatelessWidget {
       spacing: r.value(mobile: 10.0, tablet: 12.0),
       runSpacing: r.value(mobile: 10.0, tablet: 12.0),
       children: [
-        _ContactButton(
-          label: "WhatsApp",
-          onTap: () => UrlHelper.openWhatsApp(profile.phone),
-          isOutline: false,
-          compact: r.isMobile,
-        ),
-        _ContactButton(
-          label: profile.email,
-          onTap: () => UrlHelper.openEmail(profile.email),
-          isOutline: true,
+        _GetInTouchDropdown(
+          profile: profile,
           compact: r.isMobile,
         ),
         _ContactButton(
@@ -259,6 +241,111 @@ class ContactSection extends StatelessWidget {
           compact: r.isMobile,
         ),
       ],
+    );
+  }
+}
+
+class _GetInTouchDropdown extends StatefulWidget {
+  final ProfileData profile;
+  final bool compact;
+
+  const _GetInTouchDropdown({
+    required this.profile,
+    this.compact = false,
+  });
+
+  @override
+  State<_GetInTouchDropdown> createState() => _GetInTouchDropdownState();
+}
+
+class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        if (value == 'whatsapp') {
+          UrlHelper.openWhatsApp(widget.profile.phone);
+        } else if (value == 'email') {
+          UrlHelper.openEmail(widget.profile.email);
+        }
+      },
+      offset: const Offset(0, -100),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      color: const Color(0xFF1A1A2E),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'whatsapp',
+          child: Row(
+            children: [
+              const Icon(Icons.chat, color: Color(0xFF25D366), size: 20),
+              const SizedBox(width: 12),
+              Text(
+                'WhatsApp',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  fontSize: widget.compact ? 13 : 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'email',
+          child: Row(
+            children: [
+              const Icon(Icons.email, color: Color(0xFFEA4335), size: 20),
+              const SizedBox(width: 12),
+              Text(
+                'Gmail',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  fontSize: widget.compact ? 13 : 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hovering = true),
+        onExit: (_) => setState(() => _hovering = false),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.compact ? 20 : 28,
+            vertical: widget.compact ? 14 : 16,
+          ),
+          decoration: BoxDecoration(
+            gradient: AppTheme.primaryGradient,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.gradientStart.withValues(alpha: _hovering ? 0.5 : 0.3),
+                blurRadius: _hovering ? 24 : 16,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Get in Touch",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: widget.compact ? 13 : 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 18),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
