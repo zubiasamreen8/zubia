@@ -280,7 +280,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           child: Row(
             children: [
               Image.asset('assets/whatsapp.png', width: 20, height: 20),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Text(
                 'WhatsApp',
                 style: TextStyle(
@@ -296,7 +296,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           child: Row(
             children: [
               Image.asset('assets/gmail.png', width: 20, height: 20),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Text(
                 'Gmail',
                 style: TextStyle(
