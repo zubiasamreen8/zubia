@@ -151,12 +151,13 @@ class ContactSection extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             r.isMobileSmall
                 ? "Let's talk about what you need to build."
                 : "Let's talk about\nwhat you need to build.",
+            textAlign: TextAlign.center,
             style: AppTheme.displaySmall(context)?.copyWith(
                   color: Colors.white,
                   fontSize: r.value(
@@ -176,6 +177,7 @@ class ContactSection extends StatelessWidget {
             r.isMobileSmall
                 ? "Open to HR Operations and HR Executive roles in startups and growing organizations."
                 : "Open to HR Operations and HR Executive roles\nin startups and growing organizations.",
+            textAlign: TextAlign.center,
             style: AppTheme.bodyMedium(context)?.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
                   fontSize: r.value(
