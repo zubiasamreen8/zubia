@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
 import 'package:zubia_portfolio/widgets/responsive.dart';
 import 'package:zubia_portfolio/services/content_provider.dart';
@@ -280,7 +279,17 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'whatsapp',
           child: Row(
             children: [
-              const FaIcon(FontAwesomeIcons.whatsapp, color: Color(0xFF25D366), size: 18),
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF25D366),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Center(
+                  child: Text('W', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                ),
+              ),
               const SizedBox(width: 12),
               Text(
                 'WhatsApp',
@@ -296,7 +305,17 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'email',
           child: Row(
             children: [
-              const FaIcon(FontAwesomeIcons.google, color: Color(0xFFEA4335), size: 18),
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEA4335),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Center(
+                  child: Text('G', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                ),
+              ),
               const SizedBox(width: 12),
               Text(
                 'Gmail',
