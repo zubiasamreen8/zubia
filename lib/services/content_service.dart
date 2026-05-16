@@ -46,13 +46,19 @@ class ContentService {
     final url =
         'https://docs.google.com/spreadsheets/d/$sheetId/gviz/tq?tqx=out:csv&sheet=$sheetName';
 
-    final response = await http.get(Uri.parse(url));
+    try {
+      final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to fetch $sheetName: ${response.statusCode}');
+      if (response.statusCode != 200) {
+        print('Failed to fetch $sheetName: ${response.statusCode}');
+        return [];
+      }
+
+      return _parseCsv(response.body);
+    } catch (e) {
+      print('Error fetching $sheetName: $e');
+      return [];
     }
-
-    return _parseCsv(response.body);
   }
 
   static List<List<String>> _parseCsv(String content) {
@@ -98,11 +104,12 @@ class ContentService {
     final metrics = <MetricData>[];
 
     for (final row in data.skip(1)) {
-      if (row.length >= 2 && row[0].isNotEmpty) {
-        metrics.add(MetricData(
-          value: row[0],
-          label: row[1].replaceAll('\\n', '\n'),
-        ));
+      if (row.length >= 2) {
+        final value = row[0].trim();
+        final label = row[1].trim().replaceAll('\\n', '\n');
+        if (value.isNotEmpty && label.isNotEmpty) {
+          metrics.add(MetricData(value: value, label: label));
+        }
       }
     }
 
