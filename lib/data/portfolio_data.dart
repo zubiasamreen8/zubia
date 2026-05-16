@@ -1,46 +1,23 @@
-// ─────────────────────────────────────────────
-// PORTFOLIO CONTENT — Edit everything here.
-// No need to touch any other file for content changes.
-// ─────────────────────────────────────────────
-
 class PortfolioData {
-  // ── HERO ──────────────────────────────────
   static const String name = "Zubia Samreen";
   static const String title = "HR Operations Specialist";
   static const String tagline =
       "Startups scale when their people-ops work.\nI build the HR systems that make that happen.";
   static const String resumeUrl =
-      "https://www.linkedin.com/in/zubia-samreen-2a6644243/"; // replace with actual resume link
+      "https://www.linkedin.com/in/zubia-samreen-2a6644243/";
   static const String linkedinUrl =
       "https://www.linkedin.com/in/zubia-samreen-2a6644243/";
   static const String email = "zubiasamreen8@gmail.com";
+  static const String profileImageUrl = "";
 
-  // ── METRICS ───────────────────────────────
-  // These are business outcomes — not personal achievements
   static const List<Map<String, String>> metrics = [
-    {
-      "value": "3+",
-      "label": "Years Building\nHR Systems",
-    },
-    {
-      "value": "500+",
-      "label": "Hires\nFacilitated",
-    },
-    {
-      "value": "20%",
-      "label": "Faster\nTime-to-Fill",
-    },
-    {
-      "value": "25%",
-      "label": "Engagement\nScore Lift",
-    },
-    {
-      "value": "20–25",
-      "label": "Hires/Month\nat Peak",
-    },
+    {"value": "3+", "label": "Years Building\nHR Systems"},
+    {"value": "500+", "label": "Hires\nFacilitated"},
+    {"value": "20%", "label": "Faster\nTime-to-Fill"},
+    {"value": "25%", "label": "Engagement\nScore Lift"},
+    {"value": "20–25", "label": "Hires/Month\nat Peak"},
   ];
 
-  // ── CASE STUDIES ─────────────────────────
   static const List<CaseStudy> caseStudies = [
     CaseStudy(
       tag: "Recruitment Operations",
@@ -68,20 +45,17 @@ class PortfolioData {
     ),
     CaseStudy(
       tag: "HR Ops from Zero",
-      problem:
-          "SSG Skills Arena had no HR infrastructure when I joined.",
+      problem: "SSG Skills Arena had no HR infrastructure when I joined.",
       situation:
           "SSG was an early-stage company with no formal HR policies, inconsistent documentation, and no payroll coordination system in place.",
       action:
           "Built HR from the ground up — drafted and implemented core HR policies, created standardized offer letter formats, built attendance tracking systems in Excel, and coordinated payroll data through the Petpooja platform.",
       result:
           "Complete HR operational foundation built in under 6 months. Zero payroll errors through the period. Every employee had accurate, compliant documentation from day one.",
-      impact:
-          "The company moved from HR chaos to HR clarity — ready to scale.",
+      impact: "The company moved from HR chaos to HR clarity — ready to scale.",
     ),
   ];
 
-  // ── SYSTEMS BUILT ─────────────────────────
   static const List<SystemBuilt> systems = [
     SystemBuilt(
       title: "Recruitment Pipeline Framework",
@@ -109,7 +83,6 @@ class PortfolioData {
     ),
   ];
 
-  // ── SKILLS ────────────────────────────────
   static const List<String> skills = [
     "End-to-End Recruitment",
     "HR Operations",
@@ -125,8 +98,6 @@ class PortfolioData {
     "Stakeholder Management",
   ];
 }
-
-// ── DATA MODELS ───────────────────────────────
 
 class CaseStudy {
   final String tag;

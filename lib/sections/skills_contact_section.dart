@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
-import '../data/portfolio_data.dart';
+import 'package:zubia_portfolio/widgets/responsive.dart';
+import 'package:zubia_portfolio/services/content_provider.dart';
+import 'package:zubia_portfolio/services/content_service.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final padding = AppTheme.pagePadding(context);
+    final r = context.responsive;
+    final skills = context.skills;
+
+    // Don't show section if no skills
+    if (skills.isEmpty) return const SizedBox.shrink();
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: padding.left,
-        vertical: 80,
+        horizontal: r.pagePadding.left,
+        vertical: r.value(
+          mobileSmall: 48.0,
+          mobile: 56.0,
+          tablet: 72.0,
+          laptop: 80.0,
+          desktop: 80.0,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,17 +34,21 @@ class SkillsSection extends StatelessWidget {
             "Core Expertise".toUpperCase(),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 1.5,
-                  fontSize: 11,
+                  fontSize: r.value(
+                    mobileSmall: 10.0,
+                    mobile: 11.0,
+                    tablet: 11.0,
+                  ),
                   fontWeight: FontWeight.w600,
                   color: AppTheme.muted,
                 ),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: r.value(mobileSmall: 24.0, mobile: 28.0, tablet: 32.0)),
           Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: PortfolioData.skills
-                .map((skill) => _SkillChip(label: skill))
+            spacing: r.value(mobileSmall: 8.0, mobile: 10.0, tablet: 10.0),
+            runSpacing: r.value(mobileSmall: 8.0, mobile: 10.0, tablet: 10.0),
+            children: skills
+                .map((skill) => _SkillChip(label: skill, compact: r.isMobileSmall))
                 .toList(),
           ),
         ],
@@ -43,7 +59,9 @@ class SkillsSection extends StatelessWidget {
 
 class _SkillChip extends StatefulWidget {
   final String label;
-  const _SkillChip({required this.label});
+  final bool compact;
+
+  const _SkillChip({required this.label, this.compact = false});
 
   @override
   State<_SkillChip> createState() => _SkillChipState();
@@ -65,7 +83,10 @@ class _SkillChipState extends State<_SkillChip> {
           borderRadius: BorderRadius.circular(100),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.compact ? 12 : 14,
+            vertical: widget.compact ? 6 : 8,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             border: _hovering ? null : Border.all(color: AppTheme.border),
@@ -79,7 +100,7 @@ class _SkillChipState extends State<_SkillChip> {
                   child: Text(
                     widget.label,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 13,
+                          fontSize: widget.compact ? 11 : 13,
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                         ),
@@ -88,7 +109,7 @@ class _SkillChipState extends State<_SkillChip> {
               : Text(
                   widget.label,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 13,
+                        fontSize: widget.compact ? 11 : 13,
                         color: AppTheme.accentLight,
                         fontWeight: FontWeight.w500,
                       ),
@@ -104,8 +125,8 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final padding = AppTheme.pagePadding(context);
-    final isMobile = MediaQuery.of(context).size.width < 700;
+    final r = context.responsive;
+    final profile = context.profile;
 
     return Container(
       decoration: const BoxDecoration(
@@ -120,64 +141,117 @@ class ContactSection extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: padding.left,
-        vertical: 80,
+        horizontal: r.pagePadding.left,
+        vertical: r.value(
+          mobileSmall: 48.0,
+          mobile: 56.0,
+          tablet: 72.0,
+          laptop: 80.0,
+          desktop: 80.0,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Let's talk about\nwhat you need to build.",
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+            r.isMobileSmall
+                ? "Let's talk about what you need to build."
+                : "Let's talk about\nwhat you need to build.",
+            style: AppTheme.displaySmall(context)?.copyWith(
                   color: Colors.white,
-                  fontSize: isMobile ? 28 : 36,
+                  fontSize: r.value(
+                    mobileSmall: 24.0,
+                    mobile: 28.0,
+                    tablet: 32.0,
+                    laptop: 36.0,
+                    desktop: 36.0,
+                  ),
                   fontWeight: FontWeight.w700,
                   height: 1.2,
                   letterSpacing: -0.5,
                 ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: r.value(mobileSmall: 12.0, mobile: 14.0, tablet: 16.0)),
           Text(
-            "Open to HR Operations and HR Executive roles\nin startups and growing organizations.",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            r.isMobileSmall
+                ? "Open to HR Operations and HR Executive roles in startups and growing organizations."
+                : "Open to HR Operations and HR Executive roles\nin startups and growing organizations.",
+            style: AppTheme.bodyMedium(context)?.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
-                  fontSize: 15,
+                  fontSize: r.value(
+                    mobileSmall: 13.0,
+                    mobile: 14.0,
+                    tablet: 15.0,
+                    desktop: 15.0,
+                  ),
                   height: 1.6,
                 ),
           ),
-          const SizedBox(height: 40),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              _ContactButton(
-                label: PortfolioData.email,
-                onTap: () => launchUrl(
-                  Uri.parse("mailto:${PortfolioData.email}"),
-                ),
-                isOutline: false,
-              ),
-              _ContactButton(
-                label: "LinkedIn Profile",
-                onTap: () => launchUrl(
-                  Uri.parse(PortfolioData.linkedinUrl),
-                ),
-                isOutline: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: 60),
+          SizedBox(height: r.value(mobileSmall: 28.0, mobile: 32.0, tablet: 40.0)),
+          _buildContactButtons(context, r, profile),
+          SizedBox(height: r.value(mobileSmall: 40.0, mobile: 48.0, tablet: 60.0)),
           Divider(color: Colors.white.withValues(alpha: 0.15)),
-          const SizedBox(height: 24),
+          SizedBox(height: r.value(mobileSmall: 18.0, mobile: 20.0, tablet: 24.0)),
           Text(
-            "© ${DateTime.now().year} ${PortfolioData.name}",
+            "© ${DateTime.now().year} ${profile.name}",
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Colors.white.withValues(alpha: 0.3),
-                  fontSize: 12,
+                  fontSize: r.value(mobileSmall: 11.0, mobile: 12.0, tablet: 12.0),
                 ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildContactButtons(BuildContext context, Responsive r, ProfileData profile) {
+    // Stack vertically on very small screens
+    if (r.isMobileSmall) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _ContactButton(
+            label: profile.email,
+            onTap: () => launchUrl(
+              Uri.parse("mailto:${profile.email}"),
+            ),
+            isOutline: false,
+            compact: true,
+          ),
+          const SizedBox(height: 10),
+          _ContactButton(
+            label: "LinkedIn Profile",
+            onTap: () => launchUrl(
+              Uri.parse(profile.linkedinUrl),
+            ),
+            isOutline: true,
+            compact: true,
+          ),
+        ],
+      );
+    }
+
+    return Wrap(
+      spacing: r.value(mobile: 10.0, tablet: 12.0),
+      runSpacing: r.value(mobile: 10.0, tablet: 12.0),
+      children: [
+        _ContactButton(
+          label: profile.email,
+          onTap: () => launchUrl(
+            Uri.parse("mailto:${profile.email}"),
+          ),
+          isOutline: false,
+          compact: r.isMobile,
+        ),
+        _ContactButton(
+          label: "LinkedIn Profile",
+          onTap: () => launchUrl(
+            Uri.parse(profile.linkedinUrl),
+          ),
+          isOutline: true,
+          compact: r.isMobile,
+        ),
+      ],
     );
   }
 }
@@ -186,11 +260,13 @@ class _ContactButton extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
   final bool isOutline;
+  final bool compact;
 
   const _ContactButton({
     required this.label,
     required this.onTap,
     required this.isOutline,
+    this.compact = false,
   });
 
   @override
@@ -209,11 +285,12 @@ class _ContactButtonState extends State<_ContactButton> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.compact ? 20 : 28,
+            vertical: widget.compact ? 14 : 16,
+          ),
           decoration: BoxDecoration(
-            gradient: widget.isOutline
-                ? null
-                : AppTheme.primaryGradient,
+            gradient: widget.isOutline ? null : AppTheme.primaryGradient,
             border: widget.isOutline
                 ? Border.all(
                     color: _hovering
@@ -234,9 +311,10 @@ class _ContactButtonState extends State<_ContactButton> {
           ),
           child: Text(
             widget.label,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: widget.compact ? 13 : 14,
                   fontWeight: FontWeight.w600,
                 ),
           ),

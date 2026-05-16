@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
-import '../data/portfolio_data.dart';
+import 'package:zubia_portfolio/widgets/responsive.dart';
+import 'package:zubia_portfolio/services/content_provider.dart';
+import 'package:zubia_portfolio/services/content_service.dart';
 
 class MetricsSection extends StatefulWidget {
   const MetricsSection({super.key});
@@ -15,7 +17,11 @@ class _MetricsSectionState extends State<MetricsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 700;
+    final r = context.responsive;
+    final metrics = context.metrics;
+
+    // Don't show section if no metrics
+    if (metrics.isEmpty) return const SizedBox.shrink();
 
     return VisibilityDetector(
       key: const Key('metrics'),
@@ -30,8 +36,14 @@ class _MetricsSectionState extends State<MetricsSection> {
           gradient: AppTheme.subtleGradient,
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: AppTheme.pagePadding(context).left,
-          vertical: 60,
+          horizontal: r.pagePadding.left,
+          vertical: r.value(
+            mobileSmall: 40.0,
+            mobile: 48.0,
+            tablet: 56.0,
+            laptop: 60.0,
+            desktop: 60.0,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,33 +52,101 @@ class _MetricsSectionState extends State<MetricsSection> {
               "Business Outcomes",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     letterSpacing: 1.5,
-                    fontSize: 11,
+                    fontSize: r.value(
+                      mobileSmall: 10.0,
+                      mobile: 11.0,
+                      tablet: 11.0,
+                    ),
                     fontWeight: FontWeight.w600,
                     color: AppTheme.muted,
                   ),
             ),
-            const SizedBox(height: 32),
-            isMobile ? _mobileGrid(context) : _desktopRow(context),
+            SizedBox(height: r.value(mobileSmall: 24.0, mobile: 28.0, tablet: 32.0)),
+            _buildMetricsGrid(context, r, metrics),
           ],
         ),
       ),
     );
   }
 
-  Widget _desktopRow(BuildContext context) {
+  Widget _buildMetricsGrid(BuildContext context, Responsive r, List<MetricData> metrics) {
+    // For very small screens, show single column
+    if (r.isMobileSmall) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (int i = 0; i < metrics.length; i++) ...[
+            _MetricTile(
+              metric: metrics[i],
+              visible: _visible,
+              delay: i * 80,
+              compact: true,
+            ),
+            if (i < metrics.length - 1)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Container(height: 1, color: AppTheme.border),
+              ),
+          ],
+        ],
+      );
+    }
+
+    // For mobile, show 2x2 grid
+    if (r.isMobile) {
+      return Wrap(
+        spacing: 24,
+        runSpacing: 24,
+        children: [
+          for (int i = 0; i < metrics.length; i++)
+            SizedBox(
+              width: (r.width - r.pagePadding.left - r.pagePadding.right - 24) / 2,
+              child: _MetricTile(
+                metric: metrics[i],
+                visible: _visible,
+                delay: i * 80,
+                compact: true,
+              ),
+            ),
+        ],
+      );
+    }
+
+    // For tablet, show 2x2 grid with more spacing
+    if (r.isTablet) {
+      return Wrap(
+        spacing: 40,
+        runSpacing: 32,
+        children: [
+          for (int i = 0; i < metrics.length; i++)
+            SizedBox(
+              width: (r.width - r.pagePadding.left - r.pagePadding.right - 40) / 2,
+              child: _MetricTile(
+                metric: metrics[i],
+                visible: _visible,
+                delay: i * 80,
+              ),
+            ),
+        ],
+      );
+    }
+
+    // Desktop: horizontal row with dividers
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        for (int i = 0; i < PortfolioData.metrics.length; i++) ...[
+        for (int i = 0; i < metrics.length; i++) ...[
           if (i > 0)
             Container(
               width: 1,
               height: 60,
               color: AppTheme.border,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: EdgeInsets.symmetric(
+                horizontal: r.value(mobile: 24.0, tablet: 28.0, laptop: 32.0, desktop: 40.0),
+              ),
             ),
           _MetricTile(
-            metric: PortfolioData.metrics[i],
+            metric: metrics[i],
             visible: _visible,
             delay: i * 80,
           ),
@@ -74,39 +154,25 @@ class _MetricsSectionState extends State<MetricsSection> {
       ],
     );
   }
-
-  Widget _mobileGrid(BuildContext context) {
-    return Wrap(
-      spacing: 32,
-      runSpacing: 32,
-      children: [
-        for (int i = 0; i < PortfolioData.metrics.length; i++)
-          SizedBox(
-            width: (MediaQuery.of(context).size.width - 80) / 2,
-            child: _MetricTile(
-              metric: PortfolioData.metrics[i],
-              visible: _visible,
-              delay: i * 80,
-            ),
-          ),
-      ],
-    );
-  }
 }
 
 class _MetricTile extends StatelessWidget {
-  final Map<String, String> metric;
+  final MetricData metric;
   final bool visible;
   final int delay;
+  final bool compact;
 
   const _MetricTile({
     required this.metric,
     required this.visible,
     required this.delay,
+    this.compact = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final r = context.responsive;
+
     return AnimatedOpacity(
       opacity: visible ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500 + delay),
@@ -122,21 +188,25 @@ class _MetricTile extends StatelessWidget {
                 Rect.fromLTWH(0, 0, bounds.width, bounds.height),
               ),
               child: Text(
-                metric["value"]!,
+                metric.value,
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      fontSize: 38,
+                      fontSize: compact
+                          ? r.value(mobileSmall: 28.0, mobile: 32.0)
+                          : r.value(mobile: 32.0, tablet: 34.0, laptop: 36.0, desktop: 38.0),
                       fontWeight: FontWeight.w700,
                       letterSpacing: -1,
                       color: Colors.white,
                     ),
               ),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: compact ? 4 : 6),
             Text(
-              metric["label"]!,
+              metric.label,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     height: 1.5,
-                    fontSize: 13,
+                    fontSize: compact
+                        ? r.value(mobileSmall: 11.0, mobile: 12.0)
+                        : r.value(mobile: 12.0, tablet: 12.0, laptop: 13.0, desktop: 13.0),
                   ),
             ),
           ],

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#F8F9FC"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Accent bar at top -->
+  <rect width="1200" height="6" fill="url(#accentGrad)"/>
+
+  <!-- Logo/Initials -->
+  <g transform="translate(80, 180)">
+    <rect width="120" height="120" rx="24" fill="url(#textGrad)"/>
+    <text x="60" y="85" font-family="Inter, -apple-system, sans-serif" font-size="56" font-weight="700" fill="white" text-anchor="middle">ZS</text>
+  </g>
+
+  <!-- Name -->
+  <text x="240" y="240" font-family="Inter, -apple-system, sans-serif" font-size="64" font-weight="700" fill="url(#textGrad)">Zubia Samreen</text>
+
+  <!-- Title -->
+  <text x="240" y="300" font-family="Inter, -apple-system, sans-serif" font-size="32" font-weight="500" fill="#64748B">HR Operations Specialist</text>
+
+  <!-- Tagline -->
+  <text x="80" y="420" font-family="Inter, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#444444">Building HR systems that help startups scale.</text>
+  <text x="80" y="460" font-family="Inter, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#444444">Recruitment ops, employee lifecycle, payroll coordination.</text>
+
+  <!-- Metrics highlight -->
+  <g transform="translate(80, 510)">
+    <text font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="url(#textGrad)">150+ hires</text>
+    <text x="180" font-family="Inter, -apple-system, sans-serif" font-size="24" fill="#64748B">·</text>
+    <text x="210" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="url(#textGrad)">40% faster onboarding</text>
+    <text x="520" font-family="Inter, -apple-system, sans-serif" font-size="24" fill="#64748B">·</text>
+    <text x="550" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="url(#textGrad)">3+ years experience</text>
+  </g>
+
+  <!-- Corner decoration -->
+  <circle cx="1120" cy="80" r="60" fill="url(#textGrad)" opacity="0.1"/>
+  <circle cx="1150" cy="550" r="100" fill="url(#textGrad)" opacity="0.05"/>
+</svg>

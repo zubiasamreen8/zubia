@@ -1,0 +1,116 @@
+name: Sync Content & Deploy
+
+# ═══════════════════════════════════════════════════════════════════
+# This workflow syncs content from Google Sheets and deploys the site
+#
+# HOW TO USE:
+# 1. Edit your Google Sheet
+# 2. Go to GitHub → Actions → "Sync Content & Deploy"
+# 3. Click "Run workflow" button
+# 4. Wait 2-3 minutes for site to update
+# ═══════════════════════════════════════════════════════════════════
+
+on:
+  # Manual trigger - Click "Run workflow" in GitHub Actions
+  workflow_dispatch:
+    inputs:
+      skip_deploy:
+        description: 'Skip deployment (only sync content)'
+        required: false
+        default: 'false'
+        type: boolean
+
+  # Automatic trigger - runs every 6 hours (optional, can remove if not needed)
+  # schedule:
+  #   - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "sync-and-deploy"
+  cancel-in-progress: false
+
+jobs:
+  sync-content:
+    runs-on: ubuntu-latest
+    outputs:
+      changes_detected: ${{ steps.check_changes.outputs.changes }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Sync content from Google Sheets
+        run: dart run scripts/sync_from_sheets.dart
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet lib/data/portfolio_data.dart; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "📋 No content changes detected"
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "✅ Content changes detected"
+          fi
+
+      - name: Commit changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add lib/data/portfolio_data.dart
+          git commit -m "chore: sync content from Google Sheets
+
+          Auto-synced at $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+
+          Co-Authored-By: GitHub Actions <github-actions[bot]@users.noreply.github.com>"
+          git push
+
+  build-and-deploy:
+    needs: sync-content
+    if: ${{ github.event.inputs.skip_deploy != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Get latest with synced content
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build web
+        run: flutter build web --release --base-href "/zubia/"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Summary
+        run: |
+          echo "## 🎉 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Your portfolio has been updated!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 **Live URL:** https://zubiasamreen8.github.io/zubia/" >> $GITHUB_STEP_SUMMARY

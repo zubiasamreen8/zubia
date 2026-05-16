@@ -1,0 +1,27 @@
+{
+  "name": "Zubia Samreen — HR Operations Specialist",
+  "short_name": "Zubia Samreen",
+  "description": "3+ years building HR systems that help startups scale. Recruitment ops, employee lifecycle, payroll coordination.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366F1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["portfolio", "business"],
+  "lang": "en-US",
+  "dir": "ltr"
+}
