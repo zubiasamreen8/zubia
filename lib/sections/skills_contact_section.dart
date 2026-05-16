@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
 import 'package:zubia_portfolio/widgets/responsive.dart';
 import 'package:zubia_portfolio/services/content_provider.dart';
@@ -279,7 +280,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'whatsapp',
           child: Row(
             children: [
-              const Icon(Icons.chat, color: Color(0xFF25D366), size: 20),
+              const FaIcon(FontAwesomeIcons.whatsapp, color: Color(0xFF25D366), size: 18),
               const SizedBox(width: 12),
               Text(
                 'WhatsApp',
@@ -295,7 +296,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'email',
           child: Row(
             children: [
-              const Icon(Icons.email, color: Color(0xFFEA4335), size: 20),
+              const FaIcon(FontAwesomeIcons.google, color: Color(0xFFEA4335), size: 18),
               const SizedBox(width: 12),
               Text(
                 'Gmail',

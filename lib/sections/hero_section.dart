@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
 import 'package:zubia_portfolio/widgets/responsive.dart';
 import 'package:zubia_portfolio/services/content_provider.dart';
@@ -314,9 +315,8 @@ class _ResponsiveButtons extends StatelessWidget {
             compact: true,
           ),
           const SizedBox(height: 10),
-          _SecondaryButton(
-            label: "Get in Touch",
-            onTap: () => UrlHelper.openEmail(profile.email),
+          _GetInTouchDropdown(
+            profile: profile,
             compact: true,
           ),
         ],
@@ -337,9 +337,8 @@ class _ResponsiveButtons extends StatelessWidget {
           onTap: () => UrlHelper.openResume(profile.resumeUrl),
           compact: r.isMobile,
         ),
-        _SecondaryButton(
-          label: "Get in Touch",
-          onTap: () => UrlHelper.openEmail(profile.email),
+        _GetInTouchDropdown(
+          profile: profile,
           compact: r.isMobile,
         ),
       ],
@@ -406,6 +405,90 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
                   fontWeight: FontWeight.w600,
                 ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GetInTouchDropdown extends StatelessWidget {
+  final ProfileData profile;
+  final bool compact;
+
+  const _GetInTouchDropdown({
+    required this.profile,
+    this.compact = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        if (value == 'whatsapp') {
+          UrlHelper.openWhatsApp(profile.phone);
+        } else if (value == 'email') {
+          UrlHelper.openEmail(profile.email);
+        }
+      },
+      offset: const Offset(0, 50),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      color: Colors.white,
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'whatsapp',
+          child: Row(
+            children: [
+              const FaIcon(FontAwesomeIcons.whatsapp, color: Color(0xFF25D366), size: 18),
+              const SizedBox(width: 12),
+              Text(
+                'WhatsApp',
+                style: TextStyle(
+                  color: AppTheme.accent,
+                  fontSize: compact ? 13 : 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'email',
+          child: Row(
+            children: [
+              const FaIcon(FontAwesomeIcons.google, color: Color(0xFFEA4335), size: 18),
+              const SizedBox(width: 12),
+              Text(
+                'Gmail',
+                style: TextStyle(
+                  color: AppTheme.accent,
+                  fontSize: compact ? 13 : 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: compact ? 18 : 24,
+          vertical: compact ? 12 : 14,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppTheme.border),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Get in Touch",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontSize: compact ? 13 : 14,
+                  ),
+            ),
+            const SizedBox(width: 6),
+            Icon(Icons.keyboard_arrow_down, color: AppTheme.accent, size: 18),
+          ],
         ),
       ),
     );
