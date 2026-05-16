@@ -73,7 +73,7 @@ const Map<String, List<_StepData>> _caseStudySteps = {
     _StepData('Part 2', 'Structured Engagement'),
     _StepData('Part 3', 'Becoming the Bridge'),
   ],
-  'Building HR from Zero': [
+  'HR Ops from Zero': [
     _StepData('Week 1–2', 'Payroll Foundation'),
     _StepData('Month 1', 'Documentation Standards'),
     _StepData('Month 2', 'Policy Suite'),
