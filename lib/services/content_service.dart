@@ -195,6 +195,7 @@ class PortfolioContent {
           title: PortfolioData.title,
           tagline: PortfolioData.tagline,
           email: PortfolioData.email,
+          phone: PortfolioData.phone,
           linkedinUrl: PortfolioData.linkedinUrl,
           resumeUrl: PortfolioData.resumeUrl,
           profileImageUrl: PortfolioData.profileImageUrl,
@@ -228,6 +229,7 @@ class ProfileData {
   final String title;
   final String tagline;
   final String email;
+  final String phone;
   final String linkedinUrl;
   final String resumeUrl;
   final String profileImageUrl;
@@ -237,6 +239,7 @@ class ProfileData {
     required this.title,
     required this.tagline,
     required this.email,
+    required this.phone,
     required this.linkedinUrl,
     required this.resumeUrl,
     required this.profileImageUrl,

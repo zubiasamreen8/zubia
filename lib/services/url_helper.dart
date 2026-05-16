@@ -43,4 +43,12 @@ class UrlHelper {
   static Future<void> openResume(String resumeUrl) async {
     await launchUrl(Uri.parse(resumeUrl), mode: LaunchMode.externalApplication);
   }
+
+  static Future<void> openWhatsApp(String phone) async {
+    final cleanPhone = phone.replaceAll(RegExp(r'[^\d]'), '');
+    const message = "Hi Zubia, I came across your portfolio and would like to connect.";
+    final encodedMessage = Uri.encodeComponent(message);
+    final whatsappUrl = 'https://wa.me/$cleanPhone?text=$encodedMessage';
+    await launchUrl(Uri.parse(whatsappUrl), mode: LaunchMode.externalApplication);
+  }
 }

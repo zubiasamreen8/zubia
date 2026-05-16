@@ -213,9 +213,16 @@ class ContactSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ContactButton(
+            label: "WhatsApp",
+            onTap: () => UrlHelper.openWhatsApp(profile.phone),
+            isOutline: false,
+            compact: true,
+          ),
+          const SizedBox(height: 10),
+          _ContactButton(
             label: profile.email,
             onTap: () => UrlHelper.openEmail(profile.email),
-            isOutline: false,
+            isOutline: true,
             compact: true,
           ),
           const SizedBox(height: 10),
@@ -234,9 +241,15 @@ class ContactSection extends StatelessWidget {
       runSpacing: r.value(mobile: 10.0, tablet: 12.0),
       children: [
         _ContactButton(
+          label: "WhatsApp",
+          onTap: () => UrlHelper.openWhatsApp(profile.phone),
+          isOutline: false,
+          compact: r.isMobile,
+        ),
+        _ContactButton(
           label: profile.email,
           onTap: () => UrlHelper.openEmail(profile.email),
-          isOutline: false,
+          isOutline: true,
           compact: r.isMobile,
         ),
         _ContactButton(
