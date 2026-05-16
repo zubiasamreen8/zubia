@@ -62,29 +62,30 @@ class CaseStudiesSection extends StatelessWidget {
 // Visual steps/layers data for each case study
 const Map<String, List<_StepData>> _caseStudySteps = {
   'Recruitment Operations': [
-    _StepData('Layer 1', 'Job Definition'),
-    _StepData('Layer 2', 'Sourcing Funnel'),
-    _StepData('Layer 3', 'Interview Architecture'),
-    _StepData('Layer 4', 'Pipeline Tracker'),
-    _StepData('Final', 'Team Building'),
+    _StepData('Layer 1', 'Job Definition', 'Created standardized JD templates for every department. Each JD had a must-have vs nice-to-have split so screening became objective, not gut-feel.'),
+    _StepData('Layer 2', 'Sourcing Funnel', 'Built a structured sourcing checklist — LinkedIn, Naukri, internal referrals, and college hiring in priority order based on role level.'),
+    _StepData('Layer 3', 'Interview Architecture', 'Defined 3-stage interview process — HR screening → technical/functional round → culture fit. Each stage had a scorecard.'),
+    _StepData('Layer 4', 'Pipeline Tracker', 'Built a live Excel dashboard tracking every open role — candidate name, stage, interviewer, feedback status, expected offer date.'),
+    _StepData('Final', 'Team Building', 'Hired and mentored a team of 4–5 recruiters. Each recruiter owned specific departments. Daily 15-minute standups.'),
   ],
   'Employee Engagement': [
-    _StepData('Part 1', 'Formal Grievance Process'),
-    _StepData('Part 2', 'Structured Engagement'),
-    _StepData('Part 3', 'Becoming the Bridge'),
+    _StepData('Part 1', 'Formal Grievance Process', 'Created a documented grievance path. Employee raises concern → HR logs it → resolution within 5 working days → outcome communicated back.'),
+    _StepData('Part 2', 'Structured Engagement', 'Monthly townhalls, quarterly one-on-ones, anonymous pulse surveys every two months, D&I and policy awareness sessions.'),
+    _StepData('Part 3', 'Becoming the Bridge', 'Positioned as the trusted point of contact between 100+ employees and senior leadership. Mediated disputes, escalated what needed escalating.'),
   ],
   'HR Ops from Zero': [
-    _StepData('Week 1–2', 'Payroll Foundation'),
-    _StepData('Month 1', 'Documentation Standards'),
-    _StepData('Month 2', 'Policy Suite'),
-    _StepData('Month 3–6', 'Lifecycle Ownership'),
+    _StepData('Week 1–2', 'Payroll Foundation', 'Built Excel-based attendance tracker. Integrated with Petpooja platform. Defined monthly payroll calendar — data cutoff, processing, transfer dates.'),
+    _StepData('Month 1', 'Documentation Standards', 'Created master offer letter template. Built employee record system — one folder per employee, standardized documents at each lifecycle stage.'),
+    _StepData('Month 2', 'Policy Suite', 'Drafted core HR policies — attendance, leave, code of conduct, grievance policy. Got reviewed, approved, and circulated with signed acknowledgement.'),
+    _StepData('Month 3–6', 'Lifecycle Ownership', 'Owned end-to-end recruitment, structured onboarding, and all exits — resignation, notice period, Full & Final settlement coordination.'),
   ],
 };
 
 class _StepData {
   final String label;
   final String title;
-  const _StepData(this.label, this.title);
+  final String description;
+  const _StepData(this.label, this.title, this.description);
 }
 
 class _CaseStudyCard extends StatefulWidget {
@@ -374,8 +375,8 @@ class _StepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: compact ? 100 : 130,
-      padding: EdgeInsets.all(compact ? 10 : 14),
+      width: compact ? 220 : 260,
+      padding: EdgeInsets.all(compact ? 12 : 16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -385,7 +386,7 @@ class _StepCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: AppTheme.gradientStart.withValues(alpha: 0.2),
         ),
@@ -407,14 +408,24 @@ class _StepCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: compact ? 4 : 6),
+          SizedBox(height: compact ? 6 : 8),
           Text(
             step.title,
             style: TextStyle(
-              fontSize: compact ? 11 : 12,
-              fontWeight: FontWeight.w600,
+              fontSize: compact ? 13 : 14,
+              fontWeight: FontWeight.w700,
               color: AppTheme.accent,
               height: 1.3,
+            ),
+          ),
+          SizedBox(height: compact ? 8 : 10),
+          Text(
+            step.description,
+            style: TextStyle(
+              fontSize: compact ? 11 : 12,
+              fontWeight: FontWeight.w400,
+              color: AppTheme.accentLight,
+              height: 1.5,
             ),
           ),
         ],
