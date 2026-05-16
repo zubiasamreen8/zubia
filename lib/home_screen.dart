@@ -3,8 +3,6 @@ import 'sections/hero_section.dart';
 import 'sections/metrics_section.dart';
 import 'sections/case_studies_section.dart';
 import 'sections/systems_section.dart';
-import 'sections/how_i_work_section.dart';
-import 'sections/first_90_days_section.dart';
 import 'sections/skills_contact_section.dart';
 import 'widgets/app_theme.dart';
 import 'widgets/nav_bar.dart';
@@ -44,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 const MetricsSection(),
                 Container(key: _caseStudiesKey, child: const CaseStudiesSection()),
                 Container(key: _systemsKey, child: const SystemsSection()),
-                const HowIWorkSection(),
-                const First90DaysSection(),
                 const SkillsSection(),
                 Container(key: _contactKey, child: const ContactSection()),
               ],

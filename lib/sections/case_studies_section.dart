@@ -59,6 +59,34 @@ class CaseStudiesSection extends StatelessWidget {
   }
 }
 
+// Visual steps/layers data for each case study
+const Map<String, List<_StepData>> _caseStudySteps = {
+  'Recruitment Operations': [
+    _StepData('Layer 1', 'Job Definition'),
+    _StepData('Layer 2', 'Sourcing Funnel'),
+    _StepData('Layer 3', 'Interview Architecture'),
+    _StepData('Layer 4', 'Pipeline Tracker'),
+    _StepData('Final', 'Team Building'),
+  ],
+  'Employee Engagement': [
+    _StepData('Part 1', 'Formal Grievance Process'),
+    _StepData('Part 2', 'Structured Engagement'),
+    _StepData('Part 3', 'Becoming the Bridge'),
+  ],
+  'Building HR from Zero': [
+    _StepData('Week 1–2', 'Payroll Foundation'),
+    _StepData('Month 1', 'Documentation Standards'),
+    _StepData('Month 2', 'Policy Suite'),
+    _StepData('Month 3–6', 'Lifecycle Ownership'),
+  ],
+};
+
+class _StepData {
+  final String label;
+  final String title;
+  const _StepData(this.label, this.title);
+}
+
 class _CaseStudyCard extends StatefulWidget {
   final CaseStudyData caseStudy;
   const _CaseStudyCard({required this.caseStudy});
@@ -99,6 +127,60 @@ class _CaseStudyCardState extends State<_CaseStudyCard>
     } else {
       _controller.reverse();
     }
+  }
+
+  List<_StepData>? _getStepsForCaseStudy(String tag) {
+    for (final key in _caseStudySteps.keys) {
+      if (tag.contains(key)) {
+        return _caseStudySteps[key];
+      }
+    }
+    return null;
+  }
+
+  Widget _buildStepsRoadmap(BuildContext context, String tag, bool isCompact, Responsive r) {
+    final steps = _getStepsForCaseStudy(tag);
+    if (steps == null || steps.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "THE FRAMEWORK".toUpperCase(),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: isCompact ? 9 : 10,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+                color: AppTheme.muted,
+              ),
+        ),
+        SizedBox(height: isCompact ? 14 : 18),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: steps.asMap().entries.map((entry) {
+              final index = entry.key;
+              final step = entry.value;
+              final isLast = index == steps.length - 1;
+
+              return Row(
+                children: [
+                  _StepCard(step: step, index: index, compact: isCompact),
+                  if (!isLast)
+                    Container(
+                      width: isCompact ? 20 : 32,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        gradient: AppTheme.primaryGradient,
+                      ),
+                    ),
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -213,7 +295,9 @@ class _CaseStudyCardState extends State<_CaseStudyCard>
                             content: cs.action,
                             compact: isCompact,
                           ),
-                          SizedBox(height: isCompact ? 16 : 20),
+                          SizedBox(height: isCompact ? 20 : 28),
+                          _buildStepsRoadmap(context, cs.tag, isCompact, r),
+                          SizedBox(height: isCompact ? 20 : 28),
                           _StoryBlock(
                             label: "Result",
                             content: cs.result,
@@ -271,6 +355,69 @@ class _CaseStudyCardState extends State<_CaseStudyCard>
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _StepCard extends StatelessWidget {
+  final _StepData step;
+  final int index;
+  final bool compact;
+
+  const _StepCard({
+    required this.step,
+    required this.index,
+    this.compact = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: compact ? 100 : 130,
+      padding: EdgeInsets.all(compact ? 10 : 14),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppTheme.gradientStart.withValues(alpha: 0.08),
+            AppTheme.gradientEnd.withValues(alpha: 0.08),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: AppTheme.gradientStart.withValues(alpha: 0.2),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ShaderMask(
+            shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(
+              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+            ),
+            child: Text(
+              step.label,
+              style: TextStyle(
+                fontSize: compact ? 10 : 11,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
+          SizedBox(height: compact ? 4 : 6),
+          Text(
+            step.title,
+            style: TextStyle(
+              fontSize: compact ? 11 : 12,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.accent,
+              height: 1.3,
+            ),
+          ),
+        ],
       ),
     );
   }
