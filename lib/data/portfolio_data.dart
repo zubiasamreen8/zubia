@@ -8,7 +8,7 @@ class PortfolioData {
   static const String linkedinUrl =
       "https://www.linkedin.com/in/zubia-samreen-2a6644243/";
   static const String email = "zubiasamreen8@gmail.com";
-  static const String profileImageUrl = "";
+  static const String profileImageUrl = "assets/profile.jpg";
 
   static const List<Map<String, String>> metrics = [
     {"value": "3+", "label": "Years Building\nHR Systems"},
