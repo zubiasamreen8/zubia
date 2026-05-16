@@ -279,17 +279,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'whatsapp',
           child: Row(
             children: [
-              Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF25D366),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Center(
-                  child: Text('W', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-                ),
-              ),
+              Image.asset('assets/whatsapp.png', width: 20, height: 20),
               const SizedBox(width: 12),
               Text(
                 'WhatsApp',
@@ -305,17 +295,7 @@ class _GetInTouchDropdownState extends State<_GetInTouchDropdown> {
           value: 'email',
           child: Row(
             children: [
-              Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEA4335),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Center(
-                  child: Text('G', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-                ),
-              ),
+              Image.asset('assets/gmail.png', width: 20, height: 20),
               const SizedBox(width: 12),
               Text(
                 'Gmail',
