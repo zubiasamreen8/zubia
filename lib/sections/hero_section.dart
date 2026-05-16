@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
 import 'package:zubia_portfolio/widgets/responsive.dart';
 import 'package:zubia_portfolio/services/content_provider.dart';
 import 'package:zubia_portfolio/services/content_service.dart';
+import 'package:zubia_portfolio/services/url_helper.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -304,19 +304,19 @@ class _ResponsiveButtons extends StatelessWidget {
         children: [
           _PrimaryButton(
             label: "View LinkedIn",
-            onTap: () => launchUrl(Uri.parse(profile.linkedinUrl)),
+            onTap: () => UrlHelper.openLinkedIn(profile.linkedinUrl),
             compact: true,
           ),
           const SizedBox(height: 10),
           _SecondaryButton(
             label: "Download Resume",
-            onTap: () => launchUrl(Uri.parse(profile.resumeUrl)),
+            onTap: () => UrlHelper.openResume(profile.resumeUrl),
             compact: true,
           ),
           const SizedBox(height: 10),
           _SecondaryButton(
             label: "Get in Touch",
-            onTap: () => launchUrl(Uri.parse("mailto:${profile.email}")),
+            onTap: () => UrlHelper.openEmail(profile.email),
             compact: true,
           ),
         ],
@@ -329,17 +329,17 @@ class _ResponsiveButtons extends StatelessWidget {
       children: [
         _PrimaryButton(
           label: "View LinkedIn",
-          onTap: () => launchUrl(Uri.parse(profile.linkedinUrl)),
+          onTap: () => UrlHelper.openLinkedIn(profile.linkedinUrl),
           compact: r.isMobile,
         ),
         _SecondaryButton(
           label: "Download Resume",
-          onTap: () => launchUrl(Uri.parse(profile.resumeUrl)),
+          onTap: () => UrlHelper.openResume(profile.resumeUrl),
           compact: r.isMobile,
         ),
         _SecondaryButton(
           label: "Get in Touch",
-          onTap: () => launchUrl(Uri.parse("mailto:${profile.email}")),
+          onTap: () => UrlHelper.openEmail(profile.email),
           compact: r.isMobile,
         ),
       ],

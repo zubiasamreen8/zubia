@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:zubia_portfolio/widgets/app_theme.dart';
 import 'package:zubia_portfolio/widgets/responsive.dart';
 import 'package:zubia_portfolio/services/content_provider.dart';
 import 'package:zubia_portfolio/services/content_service.dart';
+import 'package:zubia_portfolio/services/url_helper.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -212,18 +212,14 @@ class ContactSection extends StatelessWidget {
         children: [
           _ContactButton(
             label: profile.email,
-            onTap: () => launchUrl(
-              Uri.parse("mailto:${profile.email}"),
-            ),
+            onTap: () => UrlHelper.openEmail(profile.email),
             isOutline: false,
             compact: true,
           ),
           const SizedBox(height: 10),
           _ContactButton(
             label: "LinkedIn Profile",
-            onTap: () => launchUrl(
-              Uri.parse(profile.linkedinUrl),
-            ),
+            onTap: () => UrlHelper.openLinkedIn(profile.linkedinUrl),
             isOutline: true,
             compact: true,
           ),
@@ -237,17 +233,13 @@ class ContactSection extends StatelessWidget {
       children: [
         _ContactButton(
           label: profile.email,
-          onTap: () => launchUrl(
-            Uri.parse("mailto:${profile.email}"),
-          ),
+          onTap: () => UrlHelper.openEmail(profile.email),
           isOutline: false,
           compact: r.isMobile,
         ),
         _ContactButton(
           label: "LinkedIn Profile",
-          onTap: () => launchUrl(
-            Uri.parse(profile.linkedinUrl),
-          ),
+          onTap: () => UrlHelper.openLinkedIn(profile.linkedinUrl),
           isOutline: true,
           compact: r.isMobile,
         ),
