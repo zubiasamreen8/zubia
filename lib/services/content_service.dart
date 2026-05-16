@@ -33,7 +33,7 @@ class ContentService {
         profile: defaults.profile,
         metrics: metrics.isNotEmpty ? metrics : defaults.metrics,
         caseStudies: caseStudies.isNotEmpty ? caseStudies : defaults.caseStudies,
-        systems: systems.isNotEmpty ? systems : defaults.systems,
+        systems: defaults.systems,
         skills: skills.isNotEmpty ? skills : defaults.skills,
       );
     } catch (e) {
@@ -152,6 +152,7 @@ class ContentService {
       if (row.length >= 3 && row[0].isNotEmpty) {
         systems.add(SystemData(
           title: row[0],
+          subtitle: row.length >= 4 ? row[3] : '',
           businessProblem: row[1],
           description: row[2],
         ));

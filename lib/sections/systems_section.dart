@@ -141,25 +141,40 @@ class _SystemCardState extends State<_SystemCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.system.title,
-                style: AppTheme.headlineMedium(context)?.copyWith(
-                      fontSize: widget.compact
-                          ? 14
-                          : r.value(mobile: 15.0, tablet: 15.0, laptop: 16.0, desktop: 16.0),
-                      fontWeight: FontWeight.w600,
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: widget.system.title,
+                      style: AppTheme.headlineMedium(context)?.copyWith(
+                            fontSize: widget.compact
+                                ? 14
+                                : r.value(mobile: 15.0, tablet: 15.0, laptop: 16.0, desktop: 16.0),
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.accent,
+                          ),
                     ),
-              ),
-              if (widget.system.subtitle.isNotEmpty) ...[
-                SizedBox(height: widget.compact ? 4 : 6),
-                Text(
-                  widget.system.subtitle,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: widget.compact ? 11 : 12,
-                        color: AppTheme.muted,
+                    if (widget.system.subtitle.isNotEmpty) ...[
+                      TextSpan(
+                        text: ' — ',
+                        style: TextStyle(
+                          fontSize: widget.compact ? 14 : r.value(mobile: 15.0, tablet: 15.0, laptop: 16.0, desktop: 16.0),
+                          color: AppTheme.accent,
+                        ),
                       ),
+                      TextSpan(
+                        text: widget.system.subtitle,
+                        style: TextStyle(
+                          fontSize: widget.compact ? 13 : r.value(mobile: 14.0, tablet: 14.0, laptop: 15.0, desktop: 15.0),
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          color: AppTheme.accent,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
-              ],
+              ),
               SizedBox(height: widget.compact ? 8 : 10),
               Container(
                 padding: EdgeInsets.symmetric(
