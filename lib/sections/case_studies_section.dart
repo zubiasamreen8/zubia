@@ -79,6 +79,18 @@ const Map<String, List<_StepData>> _caseStudySteps = {
     _StepData('Month 2', 'Policy Suite', 'Drafted core HR policies — attendance, leave, code of conduct, grievance policy. Got reviewed, approved, and circulated with signed acknowledgement.'),
     _StepData('Month 3–6', 'Lifecycle Ownership', 'Owned end-to-end recruitment, structured onboarding, and all exits — resignation, notice period, Full & Final settlement coordination.'),
   ],
+  'Building Structured HR Operations': [
+    _StepData('Week 1–2', 'Payroll Foundation', 'Built Excel-based attendance tracker. Integrated with Petpooja platform. Defined monthly payroll calendar — data cutoff, processing, transfer dates.'),
+    _StepData('Month 1', 'Documentation Standards', 'Created master offer letter template. Built employee record system — one folder per employee, standardized documents at each lifecycle stage.'),
+    _StepData('Month 2', 'Policy Suite', 'Drafted core HR policies — attendance, leave, code of conduct, grievance policy. Got reviewed, approved, and circulated with signed acknowledgement.'),
+    _StepData('Month 3–6', 'Lifecycle Ownership', 'Owned end-to-end recruitment, structured onboarding, and all exits — resignation, notice period, Full & Final settlement coordination.'),
+  ],
+  'SSG': [
+    _StepData('Week 1–2', 'Payroll Foundation', 'Built Excel-based attendance tracker. Integrated with Petpooja platform. Defined monthly payroll calendar — data cutoff, processing, transfer dates.'),
+    _StepData('Month 1', 'Documentation Standards', 'Created master offer letter template. Built employee record system — one folder per employee, standardized documents at each lifecycle stage.'),
+    _StepData('Month 2', 'Policy Suite', 'Drafted core HR policies — attendance, leave, code of conduct, grievance policy. Got reviewed, approved, and circulated with signed acknowledgement.'),
+    _StepData('Month 3–6', 'Lifecycle Ownership', 'Owned end-to-end recruitment, structured onboarding, and all exits — resignation, notice period, Full & Final settlement coordination.'),
+  ],
 };
 
 class _StepData {
