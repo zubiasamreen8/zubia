@@ -150,6 +150,16 @@ class _SystemCardState extends State<_SystemCard> {
                       fontWeight: FontWeight.w600,
                     ),
               ),
+              if (widget.system.subtitle.isNotEmpty) ...[
+                SizedBox(height: widget.compact ? 4 : 6),
+                Text(
+                  widget.system.subtitle,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: widget.compact ? 11 : 12,
+                        color: AppTheme.muted,
+                      ),
+                ),
+              ],
               SizedBox(height: widget.compact ? 8 : 10),
               Container(
                 padding: EdgeInsets.symmetric(

@@ -216,6 +216,7 @@ class PortfolioContent {
         systems: PortfolioData.systems
             .map((s) => SystemData(
                   title: s.title,
+                  subtitle: s.subtitle,
                   businessProblem: s.businessProblem,
                   description: s.description,
                 ))
@@ -273,11 +274,13 @@ class CaseStudyData {
 
 class SystemData {
   final String title;
+  final String subtitle;
   final String businessProblem;
   final String description;
 
   const SystemData({
     required this.title,
+    this.subtitle = '',
     required this.businessProblem,
     required this.description,
   });

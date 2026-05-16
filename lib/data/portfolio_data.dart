@@ -60,24 +60,28 @@ class PortfolioData {
   static const List<SystemBuilt> systems = [
     SystemBuilt(
       title: "Recruitment Pipeline Framework",
+      subtitle: "TribizIndia, 2023–2025",
       businessProblem: "Eliminated hiring blind spots for leadership",
       description:
           "End-to-end sourcing-to-onboarding workflow used across 3 departments. Includes JD templates, sourcing checklist, interview stage guide, and offer process.",
     ),
     SystemBuilt(
       title: "Payroll Coordination System",
+      subtitle: "SSG Skills Arena, 2025–2026",
       businessProblem: "Zero salary errors for 6+ consecutive months",
       description:
           "Excel-based attendance and payroll data tracker integrated with Petpooja platform. Ensured timely, accurate salary processing with full audit trail.",
     ),
     SystemBuilt(
       title: "Onboarding & Exit Framework",
+      subtitle: "TribizIndia, 2023–2025",
       businessProblem: "New hires productive faster, exits handled cleanly",
       description:
           "Structured onboarding flow covering documentation, induction, policy briefing, and role onboarding. Exit process covering F&F settlement, termination docs, and knowledge transfer.",
     ),
     SystemBuilt(
       title: "HR Policy Documentation Suite",
+      subtitle: "SSG Skills Arena, 2025–2026",
       businessProblem: "Gave the organization a compliance backbone",
       description:
           "Core HR policies drafted from scratch — attendance, leave, code of conduct, offer letter formats — aligned with organizational and legal requirements.",
@@ -120,11 +124,13 @@ class CaseStudy {
 
 class SystemBuilt {
   final String title;
+  final String subtitle;
   final String businessProblem;
   final String description;
 
   const SystemBuilt({
     required this.title,
+    this.subtitle = '',
     required this.businessProblem,
     required this.description,
   });
