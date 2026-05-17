@@ -30,14 +30,8 @@ class UrlHelper {
   static Future<void> openEmail(String email) async {
     const subject = "Hey, let's connect";
     final encodedSubject = Uri.encodeComponent(subject);
-
-    if (kIsWeb) {
-      final gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=$email&su=$encodedSubject';
-      await launchUrl(Uri.parse(gmailUrl), mode: LaunchMode.externalApplication);
-    } else {
-      final mailtoUri = Uri.parse('mailto:$email?subject=$encodedSubject');
-      await launchUrl(mailtoUri);
-    }
+    final mailtoUri = Uri.parse('mailto:$email?subject=$encodedSubject');
+    await launchUrl(mailtoUri);
   }
 
   static Future<void> openResume(String resumeUrl) async {
