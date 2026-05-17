@@ -4,7 +4,7 @@ class PortfolioData {
   static const String tagline =
       "Startups scale when their people-ops work.\nI build the HR systems that make that happen.";
   static const String resumeUrl =
-      "https://drive.google.com/file/d/1QxR8gs6LSpK_4qo78UI6Xp-n47M7z8Y3/view";
+      "https://drive.google.com/file/d/1zimiF4qCtx-jr0S_z3Yxmqkz0oCr4mEB/view";
   static const String linkedinUrl =
       "https://www.linkedin.com/in/zubia-samreen-2a6644243/";
   static const String email = "zubiasamreen8@gmail.com";
